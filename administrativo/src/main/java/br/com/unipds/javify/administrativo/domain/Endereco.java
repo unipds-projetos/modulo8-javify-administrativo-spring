@@ -32,6 +32,7 @@ public class Endereco {
 
     @Override
     public String toString() {
-        return "Endereco{cep='%s', logradouro='%s'}".formatted(codigoPostal, logradouro);
+        return "Endereco{cep='%s', logradouro='%s', bairro='%s'}".formatted(codigoPostal, logradouro, bairro);
+      
     }
 }
