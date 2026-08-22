@@ -1,13 +1,20 @@
 package br.com.unipds.javify.administrativo.domain;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
-
+@Entity
 public class CartaoCredito {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assinatura_id", nullable = false)
     private Assinatura assinatura;
+    @Column(length = 100)
     private String nomeTitular;
+    @Column(length = 4)
     private String ultimosQuatroDigitos;
     private String tokenGateway;
     private LocalDate validade;

@@ -1,17 +1,31 @@
 package br.com.unipds.javify.administrativo.domain;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
-
+@Entity
 public class Usuario {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, length = 100)
     private String nome;
+    @Column(nullable = false, unique = true, length = 150)
     private String email;
+    @Column(name = "senha_hash", nullable = false, length = 60)
     private String senhaHash;
+    @Column(nullable = false)
     private boolean titular = true;
     private LocalDate dataNascimento;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cep", referencedColumnName = "codigoPostal")
     private Endereco endereco;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assinatura_id")
     private Assinatura assinatura;
 
     public Long getId() {

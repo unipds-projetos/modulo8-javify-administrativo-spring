@@ -1,5 +1,6 @@
 package br.com.unipds.javify.administrativo.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -9,8 +10,11 @@ import jakarta.persistence.Table;
 public class Endereco {
 
     @Id
+    @Column(length = 8)
     private String codigoPostal;
+    @Column(length = 150)
     private String logradouro;
+    @Column(length = 100)
     private String bairro;
 
     public String getCodigoPostal() {

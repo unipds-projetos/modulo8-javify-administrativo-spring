@@ -1,9 +1,18 @@
 package br.com.unipds.javify.administrativo.domain;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Assinatura {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "plano_id", nullable = false)
     private Plano plano;
+    @Column(name = "status_ativa", nullable = false)
     private boolean statusAtiva = true;
 
     public Integer getId() {

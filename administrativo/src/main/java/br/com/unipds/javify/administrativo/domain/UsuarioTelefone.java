@@ -1,10 +1,18 @@
 package br.com.unipds.javify.administrativo.domain;
 
+import jakarta.persistence.*;
+
+@Entity
 public class UsuarioTelefone {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
     private String numero;
+    @Enumerated(EnumType.STRING)
     private TipoTelefone tipo;
 
     public Integer getId() {

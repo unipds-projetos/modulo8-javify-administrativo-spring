@@ -1,14 +1,23 @@
 package br.com.unipds.javify.administrativo.domain;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 
+@Entity
 public class Plano {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false, length = 50)
     private String nome;
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal preco;
+    @Column(name = "possui_propagandas", nullable = false)
     private boolean possuiPropagandas;
+    @Column(name = "limite_membros", nullable = false)
     private int limiteMembros;
+    @Column(name = "modo_offline", nullable = false)
     private boolean modoOffline;
 
     public Integer getId() {
