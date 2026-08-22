@@ -1,7 +1,14 @@
 package br.com.unipds.javify.administrativo.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "endereco")
 public class Endereco {
 
+    @Id
     private String codigoPostal;
     private String logradouro;
     private String bairro;
