@@ -1,7 +1,7 @@
 package br.com.unipds.javify.administrativo;
 
 import br.com.unipds.javify.administrativo.demonstracao.AcessoJDBC;
-import br.com.unipds.javify.administrativo.repository.EnderecoRepository;
+import br.com.unipds.javify.administrativo.demonstracao.DemoJpa;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,11 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AdministrativoApplication implements CommandLineRunner {
 
     private final AcessoJDBC acessoJdbc;
-    private final EnderecoRepository enderecoRepository;
+    private final DemoJpa demoJpa;
 
-    public AdministrativoApplication(AcessoJDBC acessoJdbc, EnderecoRepository enderecoRepository) {
+    public AdministrativoApplication(AcessoJDBC acessoJdbc, DemoJpa demoJpa) {
         this.acessoJdbc = acessoJdbc;
-        this.enderecoRepository = enderecoRepository;
+        this.demoJpa = demoJpa;
     }
 
     public static void main(String[] args) {
@@ -24,6 +24,10 @@ public class AdministrativoApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         acessoJdbc.executar();
-        System.out.println("Endereço com JPA: " + enderecoRepository.findByCodigoPostal("01508000"));
+        demoJpa.buscaEndereco();
+       // demoJpa.cadastraEndereco();
+        demoJpa.atualizaEndereco();
     }
+
+
 }
