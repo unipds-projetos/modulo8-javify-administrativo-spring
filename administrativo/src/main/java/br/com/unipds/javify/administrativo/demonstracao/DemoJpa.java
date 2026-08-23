@@ -1,17 +1,23 @@
 package br.com.unipds.javify.administrativo.demonstracao;
 
+import br.com.unipds.javify.administrativo.domain.Assinatura;
 import br.com.unipds.javify.administrativo.domain.Endereco;
+import br.com.unipds.javify.administrativo.repository.AssinaturaRepository;
 import br.com.unipds.javify.administrativo.repository.EnderecoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class DemoJpa {
 
     private final EnderecoRepository enderecoRepository;
+    private final AssinaturaRepository assinaturaRepository;
 
-    public DemoJpa(EnderecoRepository enderecoRepository) {
+    public DemoJpa(EnderecoRepository enderecoRepository, AssinaturaRepository assinaturaRepository) {
         this.enderecoRepository = enderecoRepository;
+        this.assinaturaRepository = assinaturaRepository;
     }
 
     public void buscaEndereco(){
@@ -34,4 +40,22 @@ public class DemoJpa {
         System.out.println("Depois: " + e);
         System.out.println("---");
     }
+
+    @Transactional
+    public void buscarAssinaturaComPlano(){
+        List<Assinatura> assinaturas = assinaturaRepository.buscarAssinaturasComPlano();
+
+        for (Assinatura assinatura: assinaturas) {
+            System.out.printf("%s -  %s  \n", assinatura.getId(), assinatura.getPlano().getNome() );
+        }
+    }
+
+    @Transactional
+    public void removerCartaoVencido() {
+        var assinatura = assinaturaRepository.findById(3);
+        System.out.println("Cartões: " + assinatura.get().getCartoes());
+        assinatura.get().getCartoes().remove(0);
+        System.out.println("Cartões: " + assinatura.get().getCartoes());
+    }
+
 }

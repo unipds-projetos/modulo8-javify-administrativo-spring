@@ -23,10 +23,12 @@ public class AdministrativoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        acessoJdbc.executar();
-        demoJpa.buscaEndereco();
-       // demoJpa.cadastraEndereco();
-        demoJpa.atualizaEndereco();
+        //acessoJdbc.executar();
+        //demoJpa.buscaEndereco();
+        //demoJpa.cadastraEndereco();
+        //demoJpa.atualizaEndereco();
+        //demoJpa.buscarAssinaturaComPlano();
+        demoJpa.removerCartaoVencido();
     }
 
 

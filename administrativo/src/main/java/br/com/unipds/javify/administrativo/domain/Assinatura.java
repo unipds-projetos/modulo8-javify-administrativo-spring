@@ -2,6 +2,9 @@ package br.com.unipds.javify.administrativo.domain;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Assinatura {
 
@@ -15,8 +18,22 @@ public class Assinatura {
     @Column(name = "status_ativa", nullable = false)
     private boolean statusAtiva = true;
 
+    @OneToMany(mappedBy = "assinatura",
+        fetch = FetchType.LAZY,
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    private List<CartaoCredito> cartoes = new ArrayList<>();
+
     public Integer getId() {
         return id;
+    }
+
+    public List<CartaoCredito> getCartoes() {
+        return cartoes;
+    }
+
+    public void setCartoes(List<CartaoCredito> cartoes) {
+        this.cartoes = cartoes;
     }
 
     public void setId(Integer id) {
