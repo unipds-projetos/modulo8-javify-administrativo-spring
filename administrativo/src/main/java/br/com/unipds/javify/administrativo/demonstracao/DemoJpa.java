@@ -2,8 +2,11 @@ package br.com.unipds.javify.administrativo.demonstracao;
 
 import br.com.unipds.javify.administrativo.domain.Assinatura;
 import br.com.unipds.javify.administrativo.domain.Endereco;
+import br.com.unipds.javify.administrativo.domain.Usuario;
 import br.com.unipds.javify.administrativo.repository.AssinaturaRepository;
 import br.com.unipds.javify.administrativo.repository.EnderecoRepository;
+import br.com.unipds.javify.administrativo.repository.UsuarioRepository;
+import br.com.unipds.javify.administrativo.repository.projection.ResumoUsuario;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +17,12 @@ public class DemoJpa {
 
     private final EnderecoRepository enderecoRepository;
     private final AssinaturaRepository assinaturaRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public DemoJpa(EnderecoRepository enderecoRepository, AssinaturaRepository assinaturaRepository) {
+    public DemoJpa(EnderecoRepository enderecoRepository, AssinaturaRepository assinaturaRepository, UsuarioRepository usuarioRepository) {
         this.enderecoRepository = enderecoRepository;
         this.assinaturaRepository = assinaturaRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     public void buscaEndereco(){
@@ -56,6 +61,23 @@ public class DemoJpa {
         System.out.println("Cartões: " + assinatura.get().getCartoes());
         assinatura.get().getCartoes().remove(0);
         System.out.println("Cartões: " + assinatura.get().getCartoes());
+    }
+
+    public void testarConsultas() {
+        for (Usuario u : usuarioRepository.findByTitularTrue()) {
+            System.out.println("Titular: " + u.getNome() + " (" + u.getEmail() + ")");
+        }
+
+        for (Usuario u : usuarioRepository.buscarPorNome("ei")) {
+            System.out.println("Usuario encontrado por nome: " + u.getNome() + " (" + u.getEmail() + ")");
+        }
+
+        long total = usuarioRepository.contarTitularesAtivos();
+        System.out.println("Total usuários ativos: " + total);
+
+        for (ResumoUsuario u : usuarioRepository.listaResumoTitulares()) {
+            System.out.println("Resumo: " + u.getNome() + " (" + u.getEmail() + ")");
+        }
     }
 
 }

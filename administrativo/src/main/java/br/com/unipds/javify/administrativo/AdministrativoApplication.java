@@ -28,7 +28,8 @@ public class AdministrativoApplication implements CommandLineRunner {
         //demoJpa.cadastraEndereco();
         //demoJpa.atualizaEndereco();
         //demoJpa.buscarAssinaturaComPlano();
-        demoJpa.removerCartaoVencido();
+        //demoJpa.removerCartaoVencido();
+        demoJpa.testarConsultas();
     }
 
 
