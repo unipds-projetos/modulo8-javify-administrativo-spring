@@ -59,8 +59,10 @@ public class DemoJpa {
     public void removerCartaoVencido() {
         var assinatura = assinaturaRepository.findById(3);
         System.out.println("Cartões: " + assinatura.get().getCartoes());
-        assinatura.get().getCartoes().remove(0);
-        System.out.println("Cartões: " + assinatura.get().getCartoes());
+        if (!assinatura.get().getCartoes().isEmpty()) {
+            assinatura.get().getCartoes().remove(0);
+            System.out.println("Cartões: " + assinatura.get().getCartoes());
+        }
     }
 
     public void testarConsultas() {
