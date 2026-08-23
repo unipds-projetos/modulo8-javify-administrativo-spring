@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findByTitularTrue();
 
     @Query("SELECT u from Usuario u WHERE LOWER(u.nome) LIKE LOWER(CONCAT('%', :termo, '%')) Order by u.nome")
