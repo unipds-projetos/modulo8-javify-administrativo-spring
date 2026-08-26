@@ -65,7 +65,42 @@ public class AssinaturaService {
         assinaturaRepository.deleteById(id);
     }
 
-    private AssinaturaResponse toResponse(Assinatura assinatura) {
+    @Transactional
+    public void cancelar(Integer id) {
+        System.out.println("1 - Entrou no método cancelar: " + id);
+
+
+        System.out.println("2 - Tentando adquirir o lock...");
+
+
+        Assinatura assinatura = assinaturaRepository
+                .findByIdForUpdate(id)
+                .orElseThrow(() -> new EntityNotFoundException("Assinatura não encontrada: " + id));
+
+
+        System.out.println("3 - Lock adquirido");
+
+
+        if (!assinatura.isStatusAtiva()) {
+            System.out.println("4 - Assinatura já estava cancelada");
+            throw new IllegalStateException("Assinatura já está cancelada: " + id);
+        }
+        System.out.println("5 - Iniciando pausa");
+
+
+        try {
+            Thread.sleep(5_000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException("Operação interrompida", e);
+        }
+
+
+        System.out.println("6 - Alterando status");
+        assinatura.setStatusAtiva(false);
+    }
+
+        private AssinaturaResponse toResponse(Assinatura assinatura) {
         var plano = assinatura.getPlano();
         var planoResponse = new PlanoResponse(
                 plano.getId(),

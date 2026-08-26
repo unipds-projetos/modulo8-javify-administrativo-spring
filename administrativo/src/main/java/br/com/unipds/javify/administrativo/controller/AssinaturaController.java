@@ -52,4 +52,11 @@ public class AssinaturaController {
         assinaturaService.remover(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/cancelar")
+    public ResponseEntity<Void> cancelar(@PathVariable Integer id) {
+        assinaturaService.cancelar(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

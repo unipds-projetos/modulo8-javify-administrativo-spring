@@ -6,6 +6,7 @@ import br.com.unipds.javify.administrativo.dto.PlanoResponse;
 import br.com.unipds.javify.administrativo.repository.PlanoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -62,6 +63,22 @@ public class PlanoService {
         }
         planoRepository.deleteById(id);
     }
+
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public void demonstrarRepeatableRead(Integer planoId) throws InterruptedException {
+        var primeiroPreco = planoRepository.buscarPrecoPorId(planoId);
+
+        System.out.println("Primeira leitura: " + primeiroPreco);
+        System.out.println("Altere o preço no DBeaver e execute COMMIT...");
+
+
+        Thread.sleep(15_000);
+
+        var segundoPreco = planoRepository.buscarPrecoPorId(planoId);
+
+        System.out.println("Segunda leitura: " + segundoPreco);
+    }
+
 
     private PlanoResponse toResponse(Plano plano) {
         return new PlanoResponse(

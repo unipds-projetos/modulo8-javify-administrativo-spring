@@ -52,4 +52,10 @@ public class PlanoController {
         planoService.remover(id);
         return ResponseEntity.noContent().build();
     }
-}
+
+    @GetMapping("/isolamento")
+    public ResponseEntity<Void> testaIsolamento() throws InterruptedException {
+        planoService.demonstrarRepeatableRead(2);
+        return ResponseEntity.noContent().build();
+    }
+    }
