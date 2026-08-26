@@ -59,4 +59,32 @@ public class AssinaturaController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/cobrancas/processar-lote")
+    public ResponseEntity<List<Integer>> processarLote(
+            @RequestParam(defaultValue = "2") int limite,
+            @RequestParam(defaultValue = "10") int segundos
+    ) {
+        var ids = assinaturaService.processarLote(limite, segundos);
+
+
+        return ResponseEntity.ok(ids);
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Void> alterarStatus(
+            @PathVariable Integer id,
+            @RequestParam boolean ativa,
+            @RequestParam(defaultValue = "5") int segundos
+    ) {
+        assinaturaService.alterarStatusComLockOtimista(
+                id,
+                ativa,
+                segundos
+        );
+
+
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

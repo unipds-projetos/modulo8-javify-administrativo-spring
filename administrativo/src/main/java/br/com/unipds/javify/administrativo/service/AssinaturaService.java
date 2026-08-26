@@ -7,6 +7,8 @@ import br.com.unipds.javify.administrativo.dto.PlanoResponse;
 import br.com.unipds.javify.administrativo.repository.AssinaturaRepository;
 import br.com.unipds.javify.administrativo.repository.PlanoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -100,7 +102,87 @@ public class AssinaturaService {
         assinatura.setStatusAtiva(false);
     }
 
-        private AssinaturaResponse toResponse(Assinatura assinatura) {
+    @Transactional
+    public List<Integer> processarLote(int limite, int segundos
+    ) {
+        String worker = Thread.currentThread().getName();
+        Pageable pageable = PageRequest.of(0, limite);
+
+        System.out.println(worker + " - procurando assinaturas");
+
+        List<Assinatura> assinaturas =
+                assinaturaRepository.buscarLoteParaProcessamento(pageable);
+
+        List<Integer> ids = assinaturas.stream()
+                .map(Assinatura::getId)
+                .toList();
+
+        System.out.println(worker + " - registros bloqueados: " + ids);
+
+
+        try {
+            Thread.sleep(segundos * 1_000L);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException("Processamento interrompido", e);
+        }
+
+        System.out.println(worker + " - finalizando registros: " + ids);
+
+        return ids;
+    }
+
+    @Transactional
+    public void alterarStatusComLockOtimista(
+            Integer id,
+            boolean ativa,
+            int segundos
+    ) {
+        String requisicao = Thread.currentThread().getName();
+
+
+        Assinatura assinatura = assinaturaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Assinatura não encontrada: " + id
+                ));
+
+
+        System.out.printf(
+                "%s leu: id=%d, ativa=%s, versão=%d%n",
+                requisicao,
+                assinatura.getId(),
+                assinatura.isStatusAtiva(),
+                assinatura.getVersao()
+        );
+
+
+        try {
+            Thread.sleep(segundos * 1_000L);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException("Operação interrompida", e);
+        }
+
+        assinatura.setStatusAtiva(ativa);
+
+        System.out.printf(
+                "%s tentando salvar: ativa=%s, versão esperada=%d%n",
+                requisicao,
+                ativa,
+                assinatura.getVersao()
+        );
+
+        assinaturaRepository.flush();
+
+        System.out.printf(
+                "%s salvou com sucesso; nova versão=%d%n",
+                requisicao,
+                assinatura.getVersao()
+        );
+    }
+
+
+    private AssinaturaResponse toResponse(Assinatura assinatura) {
         var plano = assinatura.getPlano();
         var planoResponse = new PlanoResponse(
                 plano.getId(),
@@ -116,4 +198,6 @@ public class AssinaturaService {
                 assinatura.isStatusAtiva()
         );
     }
+
+
 }

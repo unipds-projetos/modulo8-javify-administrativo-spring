@@ -2,11 +2,13 @@ package br.com.unipds.javify.administrativo.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
@@ -56,4 +58,14 @@ public class GlobalExceptionHandler {
         problem.setTitle("Erro interno no servidor");
         return problem;
     }
+
+    @ExceptionHandler(OptimisticLockingFailureException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, String> handleOptimisticLock(OptimisticLockingFailureException ex) {
+        return Map.of(
+                "erro", "Conflito de concorrência detectado.",
+                "mensagem", "O recurso foi modificado por outra operação. Recarregue e tente novamente."
+        );
+    }
+
 }

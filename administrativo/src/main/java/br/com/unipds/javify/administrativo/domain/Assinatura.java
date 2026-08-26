@@ -24,6 +24,9 @@ public class Assinatura {
         orphanRemoval = true)
     private List<CartaoCredito> cartoes = new ArrayList<>();
 
+    @Version
+    private Long versao;
+
     public Integer getId() {
         return id;
     }
@@ -54,6 +57,14 @@ public class Assinatura {
 
     public void setStatusAtiva(boolean statusAtiva) {
         this.statusAtiva = statusAtiva;
+    }
+
+    public Long getVersao() {
+        return versao;
+    }
+
+    public void setVersao(Long versao) {
+        this.versao = versao;
     }
 
     @Override
