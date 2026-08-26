@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -85,6 +86,20 @@ public class AssinaturaController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/pagamento")
+    public ResponseEntity<?> confirmarPagamento(
+            @PathVariable Integer id,
+            @RequestParam boolean aprovado
+    ) {
+        try {
+            assinaturaService.confirmarPagamento(id, aprovado);
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 }

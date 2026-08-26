@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -20,10 +21,12 @@ public class AssinaturaService {
 
     private final AssinaturaRepository assinaturaRepository;
     private final PlanoRepository planoRepository;
+    private final LogPagamentoService logPagamentoService;
 
-    public AssinaturaService(AssinaturaRepository assinaturaRepository, PlanoRepository planoRepository) {
+    public AssinaturaService(AssinaturaRepository assinaturaRepository, PlanoRepository planoRepository, LogPagamentoService logPagamentoService) {
         this.assinaturaRepository = assinaturaRepository;
         this.planoRepository = planoRepository;
+        this.logPagamentoService = logPagamentoService;
     }
 
     public List<AssinaturaResponse> listarTodas() {
@@ -180,6 +183,30 @@ public class AssinaturaService {
                 assinatura.getVersao()
         );
     }
+
+    @Transactional(rollbackFor = {IOException.class})
+    public void confirmarPagamento(
+            Integer assinaturaId,
+            boolean pagamentoAprovado
+    ) throws IOException {
+        var assinatura = assinaturaRepository
+                .findById(assinaturaId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Assinatura não encontrada: " + assinaturaId
+                ));
+
+        assinatura.setStatusAtiva(true);
+
+        if (!pagamentoAprovado) {
+            logPagamentoService.registrarFalha(
+                    assinaturaId,
+                    "Pagamento recusado"
+            );
+
+            throw new IOException("Pagamento recusado");
+        }
+    }
+
 
 
     private AssinaturaResponse toResponse(Assinatura assinatura) {
