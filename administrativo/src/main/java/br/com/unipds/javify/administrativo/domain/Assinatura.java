@@ -2,6 +2,7 @@ package br.com.unipds.javify.administrativo.domain;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class Assinatura {
         cascade = CascadeType.ALL,
         orphanRemoval = true)
     private List<CartaoCredito> cartoes = new ArrayList<>();
+
+    private LocalDate dataProximaCobranca;
 
     @Version
     private Long versao;
@@ -65,6 +68,14 @@ public class Assinatura {
 
     public void setVersao(Long versao) {
         this.versao = versao;
+    }
+
+    public LocalDate getDataProximaCobranca() {
+        return dataProximaCobranca;
+    }
+
+    public void setDataProximaCobranca(LocalDate dataProximaCobranca) {
+        this.dataProximaCobranca = dataProximaCobranca;
     }
 
     @Override
