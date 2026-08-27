@@ -395,6 +395,257 @@
             "description": "curl -X DELETE {{baseUrl}}/api/assinaturas/{{assinaturaId}}"
           },
           "response": []
+        },
+        {
+          "name": "cancela1-segunda",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/assinaturas/1/cancelar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assinaturas",
+                "1",
+                "cancelar"
+              ]
+            },
+            "description": "curl -X PATCH {{baseUrl}}/api/assinaturas/1/cancelar"
+          },
+          "response": []
+        },
+        {
+          "name": "cancela1-primeiro",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/assinaturas/1/cancelar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assinaturas",
+                "1",
+                "cancelar"
+              ]
+            },
+            "description": "curl -X PATCH {{baseUrl}}/api/assinaturas/1/cancelar"
+          },
+          "response": []
+        },
+        {
+          "name": "Lote1",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/assinaturas/cobrancas/processar-lote?limite=2&segundos=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assinaturas",
+                "cobrancas",
+                "processar-lote"
+              ],
+              "query": [
+                {
+                  "key": "limite",
+                  "value": "2"
+                },
+                {
+                  "key": "segundos",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "curl -X POST \"{{baseUrl}}/api/assinaturas/cobrancas/processar-lote?limite=2&segundos=10\""
+          },
+          "response": []
+        },
+        {
+          "name": "Lote2",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/assinaturas/cobrancas/processar-lote?limite=2&segundos=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assinaturas",
+                "cobrancas",
+                "processar-lote"
+              ],
+              "query": [
+                {
+                  "key": "limite",
+                  "value": "2"
+                },
+                {
+                  "key": "segundos",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "curl -X POST \"{{baseUrl}}/api/assinaturas/cobrancas/processar-lote?limite=2&segundos=10\""
+          },
+          "response": []
+        },
+        {
+          "name": "Lote3",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/assinaturas/cobrancas/processar-lote?limite=2&segundos=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assinaturas",
+                "cobrancas",
+                "processar-lote"
+              ],
+              "query": [
+                {
+                  "key": "limite",
+                  "value": "2"
+                },
+                {
+                  "key": "segundos",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "curl -X POST \"{{baseUrl}}/api/assinaturas/cobrancas/processar-lote?limite=2&segundos=10\""
+          },
+          "response": []
+        },
+        {
+          "name": "Lock otimista 1",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/assinaturas/1/status?ativa=false&segundos=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assinaturas",
+                "1",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "ativa",
+                  "value": "false"
+                },
+                {
+                  "key": "segundos",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "curl -X PATCH \"{{baseUrl}}/api/assinaturas/1/status?ativa=false&segundos=10\""
+          },
+          "response": []
+        },
+        {
+          "name": "Lock otimista 2",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/assinaturas/1/status?ativa=false&segundos=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assinaturas",
+                "1",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "ativa",
+                  "value": "false"
+                },
+                {
+                  "key": "segundos",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "curl -X PATCH \"{{baseUrl}}/api/assinaturas/1/status?ativa=false&segundos=10\""
+          },
+          "response": []
+        },
+        {
+          "name": "Pagamento aprovado",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/assinaturas/1/pagamento?aprovado=true",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assinaturas",
+                "1",
+                "pagamento"
+              ],
+              "query": [
+                {
+                  "key": "aprovado",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "curl -X PATCH \"{{baseUrl}}/api/assinaturas/1/pagamento?aprovado=true\""
+          },
+          "response": []
+        },
+        {
+          "name": "Pagamento negado",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/assinaturas/4/pagamento?aprovado=false",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "assinaturas",
+                "4",
+                "pagamento"
+              ],
+              "query": [
+                {
+                  "key": "aprovado",
+                  "value": "false"
+                }
+              ]
+            },
+            "description": "curl -X PATCH \"{{baseUrl}}/api/assinaturas/4/pagamento?aprovado=false\""
+          },
+          "response": []
         }
       ]
     },
