@@ -3,6 +3,7 @@ package br.com.unipds.javify.administrativo.service;
 import br.com.unipds.javify.administrativo.domain.Assinatura;
 import br.com.unipds.javify.administrativo.dto.AssinaturaRequest;
 import br.com.unipds.javify.administrativo.dto.AssinaturaResponse;
+import br.com.unipds.javify.administrativo.dto.CancelamentoDTO;
 import br.com.unipds.javify.administrativo.dto.PlanoResponse;
 import br.com.unipds.javify.administrativo.repository.AssinaturaRepository;
 import br.com.unipds.javify.administrativo.repository.PlanoRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -225,6 +227,20 @@ public class AssinaturaService {
                 assinatura.isStatusAtiva()
         );
     }
+
+    @Transactional
+    public CancelamentoDTO cancelarComReembolso(Integer assinaturaId) {
+        BigDecimal reembolso = assinaturaRepository.calcularReembolso(assinaturaId);
+
+
+        Assinatura assinatura = assinaturaRepository.findById(assinaturaId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Assinatura não encontrada: " + assinaturaId));
+        assinatura.setStatusAtiva(false);
+
+        return new CancelamentoDTO(assinaturaId, reembolso);
+    }
+
 
 
 }

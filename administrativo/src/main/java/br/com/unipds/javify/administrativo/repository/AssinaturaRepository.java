@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,5 +33,9 @@ public interface AssinaturaRepository extends JpaRepository<Assinatura, Integer>
        ORDER BY a.id
         """)
     List<Assinatura> buscarLoteParaProcessamento(Pageable pageable);
+
+    @Query(value = "SELECT calcular_reembolso(:assinaturaId)", nativeQuery = true)
+    BigDecimal calcularReembolso(@Param("assinaturaId") Integer assinaturaId);
+
 
 }

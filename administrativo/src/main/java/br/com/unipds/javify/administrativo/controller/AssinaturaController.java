@@ -2,6 +2,7 @@ package br.com.unipds.javify.administrativo.controller;
 
 import br.com.unipds.javify.administrativo.dto.AssinaturaRequest;
 import br.com.unipds.javify.administrativo.dto.AssinaturaResponse;
+import br.com.unipds.javify.administrativo.dto.CancelamentoDTO;
 import br.com.unipds.javify.administrativo.service.AssinaturaService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -99,6 +100,13 @@ public class AssinaturaController {
         }
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{id}/cancelar-reembolso")
+    public ResponseEntity<CancelamentoDTO> cancelarComReembolso(@PathVariable Integer id) {
+        var response = assinaturaService.cancelarComReembolso(id);
+        return ResponseEntity.ok(response);
+    }
+
 
 
 
