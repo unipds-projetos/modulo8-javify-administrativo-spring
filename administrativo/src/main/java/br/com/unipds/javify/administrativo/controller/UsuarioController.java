@@ -4,6 +4,7 @@ import br.com.unipds.javify.administrativo.dto.UsuarioRequest;
 import br.com.unipds.javify.administrativo.dto.UsuarioResponse;
 import br.com.unipds.javify.administrativo.service.UsuarioService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -52,4 +53,12 @@ public class UsuarioController {
         usuarioService.remover(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/paginado")
+    public ResponseEntity<Page<UsuarioResponse>> listar(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        return ResponseEntity.ok(usuarioService.listarPaginado(page, size));
+    }
+
 }

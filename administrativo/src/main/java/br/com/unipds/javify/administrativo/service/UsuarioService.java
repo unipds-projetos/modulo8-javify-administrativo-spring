@@ -10,6 +10,9 @@ import br.com.unipds.javify.administrativo.repository.PlanoRepository;
 import br.com.unipds.javify.administrativo.repository.UsuarioRepository;
 import br.com.unipds.javify.administrativo.repository.UsuarioTelefoneRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -174,4 +177,11 @@ public class UsuarioService {
                 assinatura.isStatusAtiva()
         );
     }
+
+    public Page<UsuarioResponse> listarPaginado(int page, int size) {
+        var pageable = PageRequest.of(page, size, Sort.by("nome").ascending());
+        return usuarioRepository.findAll(pageable)
+                .map(this::toResponseResumido);
+    }
+
 }
